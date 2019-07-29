@@ -51,7 +51,7 @@ const ChatRoom = ({
   // component did unmount
   useEffect(() => {
     return () => {
-      console.log('Component did unmount..');
+      // console.log('Component did unmount..');
     };
   }, []);
 
