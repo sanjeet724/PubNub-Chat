@@ -34,7 +34,7 @@ class App extends Component {
       timeStamp: new Date().valueOf()
     };
 
-    // fire this only if user is in char room
+    // fire this only if user is in chat room
     // else he has already exited the room
     const { showChatRoom } = this.state;
     if (showChatRoom) {
@@ -53,7 +53,6 @@ class App extends Component {
   };
 
   componentDidMount = async () => {
-    console.log(`App mounted...`);
     this.setState({ user: await this._createAnonUser() });
     this.setState({ badgeColor: this._getBadgeColor() });
 
@@ -96,9 +95,8 @@ class App extends Component {
       },
       (status, response) => {
         if (status.error) {
-          console.log(`Cannot fetch history`);
+          console.error(`Cannot fetch history`);
         }
-        console.log(`Messages in history : ${response.messages.length}`);
         const entries = response.messages.map(message => message.entry);
         // extract in the format expected
         const messages = entries.reduce((acc, entry) => {
@@ -112,15 +110,12 @@ class App extends Component {
           return acc;
         }, []);
 
-        console.log(messages);
-
         this.setState({ history: messages });
       }
     );
   };
 
   componentWillUnmount = () => {
-    console.log(`App unmounted...`);
     this.pubnub.removeListener();
     this.pubnub.unsubscribe({
       channels: ['chat-channel']
@@ -135,13 +130,11 @@ class App extends Component {
     try {
       const { data } = await httpService.get(url);
       userName = data.name + ' ' + data.surname;
-      // this.setState({ user: userName });
     } catch (err) {
       console.error(`Cannot fetch random user`);
       userName = Math.random()
         .toString(36)
         .substr(2, 5);
-      // this.setState({ user: userName });
     }
 
     return userName;
