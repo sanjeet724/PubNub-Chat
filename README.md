@@ -21,3 +21,5 @@ PubNub & React
 - Firebase
 
 # Live URL
+
+- https://pubnub-chat-app-1.firebaseapp.com/
